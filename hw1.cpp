@@ -1,62 +1,192 @@
+#include <GL/glew.h>
 #include <GL/freeglut.h>
+#include <iostream>
 
-void init()
+GLuint Program;
+GLint  Attrib_vertex;
+GLint  Unif_color;
+GLuint VBO;
+
+struct vertex
+{
+	GLfloat x;
+	GLfloat y;
+};
+
+void shaderLog(unsigned int shader) 
+{ 
+	int   infologLen   = 0;
+	int   charsWritten = 0;
+	char *infoLog;
+
+	glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &infologLen);
+
+	if(infologLen > 1)
+	{ 
+		infoLog = new char[infologLen];
+		if(infoLog == NULL)
+		{
+			std::cout<<"ERROR: Could not allocate InfoLog buffer\n";
+			exit(1);
+		}
+		glGetShaderInfoLog(shader, infologLen, &charsWritten, infoLog);
+		std::cout<< "InfoLog: " << infoLog << "\n\n\n";
+		delete[] infoLog;
+	}
+}
+
+void initGL()
 {
 	glClearColor(0, 0, 0, 0);
-	gluOrtho2D(-5, 5, -5, 5);
 }
 
-void draw()
+void checkOpenGLerror()
+{
+	GLenum errCode;
+	if((errCode=glGetError()) != GL_NO_ERROR)
+		std::cout << "OpenGl error! - " << gluErrorString(errCode);
+}
+
+void initShader()
+{
+	const char* vsSource = 
+		"attribute vec2 coord;\n"
+		"void main() {\n"
+		"  gl_Position = vec4(coord, 0.0, 1.0);\n"
+		"}\n";
+	const char* fsSource = 
+		"uniform vec4 color;\n"
+		"void main() {\n"
+		"  gl_FragColor = color;\n"
+		"}\n";
+	GLuint vShader, fShader;
+	
+	vShader = glCreateShader(GL_VERTEX_SHADER);
+	glShaderSource(vShader, 1, &vsSource, NULL);
+	glCompileShader(vShader);
+
+	std::cout << "vertex shader \n";
+	shaderLog(vShader);
+
+	fShader = glCreateShader(GL_FRAGMENT_SHADER);
+	glShaderSource(fShader, 1, &fsSource, NULL);
+	glCompileShader(fShader);
+
+	std::cout << "fragment shader \n";
+	shaderLog(fShader);
+
+	Program = glCreateProgram();
+	glAttachShader(Program, vShader);
+	glAttachShader(Program, fShader);
+
+	glLinkProgram(Program);
+
+	int link_ok;
+	glGetProgramiv(Program, GL_LINK_STATUS, &link_ok);
+	if(!link_ok)
+	{
+		std::cout << "error attach shaders \n";
+		return;
+	}
+	const char* attr_name = "coord";
+	Attrib_vertex = glGetAttribLocation(Program, attr_name);
+	if(Attrib_vertex == -1)
+	{
+		std::cout << "could not bind attrib " << attr_name << std::endl;
+		return;
+	}
+	const char* unif_name = "color";
+	Unif_color = glGetUniformLocation(Program, unif_name);
+	if(Unif_color == -1)
+	{
+		std::cout << "could not bind uniform " << unif_name << std::endl;
+		return;
+	}
+	checkOpenGLerror();
+}
+
+void initVBO()
+{
+	glGenBuffers(1, &VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	vertex triangle[3] = { 
+		{-1.0f,-1.0f},
+		{ 0.0f, 1.0f},
+		{ 1.0f,-1.0f}
+	};
+	glBufferData(GL_ARRAY_BUFFER, sizeof(triangle), triangle, GL_STATIC_DRAW);
+
+	checkOpenGLerror();
+}
+
+void freeShader()
+{
+	glUseProgram(0); 
+	glDeleteProgram(Program);
+}
+
+void freeVBO()
+{
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glDeleteBuffers(1, &VBO);
+}
+
+void resizeWindow(int width, int height)
+{
+	glViewport(0, 0, width, height);
+}
+
+void render()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
-	glColor3f(1,0,0);//Change the object color to red
-
-	glBegin(GL_TRIANGLES);//Start drawing a triangle
-	glVertex2f(3,-4);//draw our first coordinate
-	glVertex2f(3.5,-3);//Our second coordinate
-	glVertex2f(4,-4);//Our last coordinate
-	glEnd();//Stop drawing triangles
-
-	glColor3f(0,1,0);//Change the object colors to green
-
-	glBegin(GL_QUADS);//Start drawing quads
-	glVertex2f(-4,-4);//first coordinate
-	glVertex2f(-4,-2);//second coordinate
-
-	glColor3f(0,0,1);//Change the color to blue halfway through to create a neat color effect
-
-	glVertex2f(-2,-2);//third coordinate (now blue)
-	glVertex2f(-2,-4);//last coordinate
-	glEnd();//Stop drawing quads
-
-	glColor3f(1,0,0);//Change color to red
-	glBegin(GL_POLYGON);//Start drawing a polygon
-	glVertex2f(-2,2);//first vertex
-	glColor3f(0,1,0);//Change color to green
-	glVertex2f(-1,3);//second vertex
-	glColor3f(0,0,1);//Change color to blue
-	glVertex2f(0,2);//third vertex
-	glColor3f(1,0,1);//Change color to purple
-	glVertex2f(-0.5,0);//fourth vertex
-	glColor3f(1,1,0);//Change color to yellow
-	glVertex2f(-1.5,0);//last vertex
-	glEnd();//Stop drawing our polygon
+	glUseProgram(Program); 
 	
-	glFlush();
-	glutPostRedisplay();
+	static float red[4] = {1.0f, 0.0f, 0.0f, 1.0f};
+	glUniform4fv(Unif_color, 1, red);
+
+	glEnableVertexAttribArray(Attrib_vertex);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glVertexAttribPointer(Attrib_vertex, 2, GL_FLOAT, GL_FALSE, 0, 0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glDrawArrays(GL_TRIANGLES, 0, 3);
+
+	glDisableVertexAttribArray(Attrib_vertex);
+
+	glUseProgram(0); 
+
+	checkOpenGLerror();
+
+	glutSwapBuffers();
 }
 
-int main(int argc, char **argv)
+int main( int argc, char **argv )
 {
 	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
-	glutInitWindowPosition(100, 100);
+	glutInitDisplayMode(GLUT_RGBA | GLUT_ALPHA | GLUT_DOUBLE);
 	glutInitWindowSize(800, 600);
-	glutCreateWindow("Homework #1");
+	glutCreateWindow("Simple shaders");
 
-	init();
-	glutDisplayFunc(draw);
+	GLenum glew_status = glewInit();
+	if(GLEW_OK != glew_status) 
+	{
+		std::cout << "Error: " << glewGetErrorString(glew_status) << "\n";
+		return 1;
+	}
+
+	if(!GLEW_VERSION_2_0) 
+	 {
+		std::cout << "No support for OpenGL 2.0 found\n";
+		return 1;
+	}
+
+	initGL();
+	initVBO();
+	initShader();
+	
+	glutReshapeFunc(resizeWindow);
+	glutDisplayFunc(render);
 	glutMainLoop();
-
-	return 0;
+	
+	freeShader();
+	freeVBO();
 }
