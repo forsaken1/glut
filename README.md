@@ -9,3 +9,7 @@ sudo apt-get install freeglut3 freeglut3-dev libglew1.5 libglew1.5-dev libglu1-m
 ```
 gcc source.cpp -lglut -lGL -lGLU -lGLEW
 ```
+
+```
+g++ test.cpp -std=c++11
+```
