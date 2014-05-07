@@ -9,14 +9,31 @@ class Point {
 	vector<point_type> v;
 
 public:
+	Point()
+	{
+		v = vector<point_type>();
+	}
+
 	Point(vector<point_type> _v)
 	{
 		v = _v;
 	}
 
-	Point(point_type* _start, point_type* _end)
+	Point(point_type x, point_type y, point_type z)
 	{
-		
+		v = vector<point_type>();
+		v.push_back(x);
+		v.push_back(y);
+		v.push_back(z);
+	}
+
+	Point(point_type x, point_type y, point_type z, point_type t)
+	{
+		v = vector<point_type>();
+		v.push_back(x);
+		v.push_back(y);
+		v.push_back(z);
+		v.push_back(t);
 	}
 
 	Point(const Point &p)
@@ -31,9 +48,14 @@ public:
 		v = p.getVector();
 	}
 
-	bool operator==(Point &p)
+	bool operator==(const Point &p)
 	{
 		return v == p.getVector();
+	}
+
+	bool operator!=(const Point &p)
+	{
+		return v != p.getVector();
 	}
 
 	// Getters
