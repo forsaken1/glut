@@ -67,6 +67,14 @@ public:
 		return *v != p.get_vector();
 	}
 
+	point_type operator[](int index)
+	{
+		if(0 <= index && index < (*v).size())
+			return (*v)[index];
+		
+		return 0;
+	}
+
 	// Getters
 
 	vector<point_type> get_vector() const

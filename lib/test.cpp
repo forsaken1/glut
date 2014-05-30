@@ -31,6 +31,9 @@ int main()
 	test_false(p0 != p_0);
 	test_true(p0 != p1);
 	test_false(p0 == p1);
+	test_true(p0[0] == 0);
+	test_true(p1[0] == 1);
+	test_true(p_0[-1] == 0);
 
 	Vector v0, v1(p0, p_0), v2(Point(0, 0, 0), Point(1, 0, 0));
 
