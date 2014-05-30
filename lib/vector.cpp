@@ -39,12 +39,12 @@ public:
 		return *this;
 	}
 
-	bool operator==(const Vector &v)
+	bool operator==(const Vector &v) const
 	{
 		return *start == v.get_start() && *end == v.get_end();
 	}
 
-	bool operator!=(const Vector &v)
+	bool operator!=(const Vector &v) const
 	{
 		return !(*this == v);
 	}
@@ -59,5 +59,12 @@ public:
 	Point get_end() const
 	{
 		return *end;
+	}
+
+	// Others
+
+	point_type length() const
+	{
+		return 1;
 	}
 };

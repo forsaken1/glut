@@ -1,5 +1,8 @@
 #include <iostream>
+#include <stdlib.h>
 #include "vector.cpp"
+
+#define EPS 0.0001
 
 using namespace std;
 
@@ -11,6 +14,11 @@ void test_true(bool expr)
 void test_false(bool expr)
 {
 	cout << (expr ? "-" : "+");
+}
+
+void test_equal(point_type l, point_type r)
+{
+	cout << (abs(l - r) < EPS ? "+" : "-");
 }
 
 int main()
@@ -31,7 +39,8 @@ int main()
 	test_true(v0 != v2);
 	test_false(v0 == v2);
 	test_false(v0 != v1);
-	
+	test_equal(v2.length(), 1);
+
 	cout << endl << "matrix tests: ";
 	cout << endl;
 
