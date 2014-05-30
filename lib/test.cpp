@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "vector.cpp"
 
-#define EPS 0.0001
+#define EPS 0.0000001
 
 using namespace std;
 
@@ -18,7 +18,12 @@ void test_false(bool expr)
 
 void test_equal(point_type l, point_type r)
 {
-	cout << (abs(l - r) < EPS ? "+" : "-");
+	cout << (fabs(l - r) < EPS ? "+" : "-");
+}
+
+void test_not_equal(point_type l, point_type r)
+{
+	cout << (fabs(l - r) > EPS ? "+" : "-");
 }
 
 int main()
@@ -36,6 +41,7 @@ int main()
 	test_true(p_0[-1] == 0);
 
 	Vector v0, v1(p0, p_0), v2(Point(0, 0, 0), Point(1, 0, 0));
+	Vector v3(p0, Point(1, 1, 1));
 
 	cout << endl << "vector tests: ";
 	test_true(v0 == v1);
@@ -43,6 +49,9 @@ int main()
 	test_false(v0 == v2);
 	test_false(v0 != v1);
 	test_equal(v2.length(), 1);
+	test_equal(v3.length(), 1.7320508075688772);
+	test_not_equal(v3.length(), 1.5);
+	test_not_equal(v3.length(), 2);
 
 	cout << endl << "matrix tests: ";
 	cout << endl;
