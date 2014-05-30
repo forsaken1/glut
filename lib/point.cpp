@@ -70,12 +70,23 @@ public:
 	const Point operator*(point_type number)
 	{
 		vector<point_type> mult = *v;
-		
+
 		for(int i = 0; i < mult.size(); ++i)
 		{
 			mult[i] *= number;
 		}
 		return Point(mult);
+	}
+
+	const Point operator+(const Point &p)
+	{
+		vector<point_type> l = *v, r = p.get_vector();
+
+		for(int i = 0; i < v->size(); ++i)
+		{
+			l[i] += r[i];
+		}
+		return Point(l);
 	}
 
 	const point_type operator[](int index) const

@@ -55,6 +55,11 @@ public:
 		return Vector(*start * number, *end * number);
 	}
 
+	const Vector operator+(const Vector &v)
+	{
+		return Vector(*start + v.get_start(), *end + v.get_end());
+	}
+
 	// Getters
 
 	const Point get_start() const
