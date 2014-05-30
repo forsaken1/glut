@@ -26,6 +26,11 @@ void test_not_equal(point_type l, point_type r)
 	cout << (fabs(l - r) > EPS ? "+" : "-");
 }
 
+void end_test_block()
+{
+	cout << "";
+}
+
 int main()
 {
 	vector<point_type> v_0(3, 0);
@@ -39,15 +44,22 @@ int main()
 	test_false(p0 != p_0);
 	test_true(p0 != p1);
 	test_false(p0 == p1);
+	end_test_block();
 
 	//operator[]
 	test_true(p0[0] == 0);
 	test_true(p1[0] == 1);
 	test_true(p_0[-1] == 0);
+	end_test_block();
 
 	//multiply
 	test_true( (Point(1, 2, 3) * 5) == Point(5, 10, 15) );
 	test_false( (Point(1, 2, 3) * 5) == Point(5, 10, 14) );
+	end_test_block();
+
+	//addition
+	test_true( Point(1, 2, 3) + Point(3, 2, 1) == Point(4, 4, 4));
+	end_test_block();
 
 
 	/* ------ */
@@ -62,16 +74,19 @@ int main()
 	test_true(v0 != v2);
 	test_false(v0 == v2);
 	test_false(v0 != v1);
+	end_test_block();
 
 	//length
 	test_equal(v2.length(), 1);
 	test_equal(v3.length(), 1.7320508075688772);
 	test_not_equal(v3.length(), 1.5);
 	test_not_equal(v3.length(), 2);
+	end_test_block();
 
 	//multiply
 	test_true( (v3 * 3) == Vector(p0, Point(3, 3, 3)) );
 	test_false( (v3 * 3) == Vector(p0, Point(3, 3, 1)) );
+	end_test_block();
 
 	//addition
 	test_true( v0 + v0 == v0 );
@@ -79,6 +94,7 @@ int main()
 	test_true( v0 + v3 == v3 );
 	test_true( v0 + v3 == Vector(Point(0, 0, 0), Point(1, 1, 1)) );
 	test_true( v3 + v4 == Vector(Point(0, 0, 0), Point(5, 6, 4)) );
+	end_test_block();
 
 
 	//Matrix tests
