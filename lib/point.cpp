@@ -67,6 +67,17 @@ public:
 		return *v != p.get_vector();
 	}
 
+	const Point operator*(point_type number)
+	{
+		vector<point_type> mult = *v;
+		
+		for(int i = 0; i < mult.size(); ++i)
+		{
+			mult[i] *= number;
+		}
+		return Point(mult);
+	}
+
 	const point_type operator[](int index) const
 	{
 		if(0 <= index && index < (*v).size())

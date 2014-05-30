@@ -50,6 +50,11 @@ public:
 		return !(*this == v);
 	}
 
+	const Vector operator*(point_type number)
+	{
+		return Vector(*start * number, *end * number);
+	}
+
 	// Getters
 
 	const Point get_start() const

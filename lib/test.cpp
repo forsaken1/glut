@@ -36,9 +36,13 @@ int main()
 	test_false(p0 != p_0);
 	test_true(p0 != p1);
 	test_false(p0 == p1);
+
 	test_true(p0[0] == 0);
 	test_true(p1[0] == 1);
 	test_true(p_0[-1] == 0);
+
+	test_true( (Point(1, 2, 3) * 5) == Point(5, 10, 15) );
+	test_false( (Point(1, 2, 3) * 5) == Point(5, 10, 14) );
 
 	Vector v0, v1(p0, p_0), v2(Point(0, 0, 0), Point(1, 0, 0));
 	Vector v3(p0, Point(1, 1, 1));
@@ -48,10 +52,14 @@ int main()
 	test_true(v0 != v2);
 	test_false(v0 == v2);
 	test_false(v0 != v1);
+
 	test_equal(v2.length(), 1);
 	test_equal(v3.length(), 1.7320508075688772);
 	test_not_equal(v3.length(), 1.5);
 	test_not_equal(v3.length(), 2);
+
+	test_true( (v3 * 3) == Vector(p0, Point(3, 3, 3)) );
+	test_false( (v3 * 3) == Vector(p0, Point(3, 3, 1)) );
 
 	cout << endl << "matrix tests: ";
 	cout << endl;
