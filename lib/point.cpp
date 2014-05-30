@@ -1,4 +1,6 @@
 #include <vector>
+#include <string>
+#include <stdio.h>
 
 using namespace std;
 
@@ -38,30 +40,45 @@ public:
 
 	Point(const Point &p)
 	{
-		v = p.getVector();
+		v = p.get_vector();
 	}
 
 	// Operators
 
 	Point operator=(const Point &p)
 	{
-		v = p.getVector();
+		v = p.get_vector();
 	}
 
 	bool operator==(const Point &p)
 	{
-		return v == p.getVector();
+		return v == p.get_vector();
 	}
 
 	bool operator!=(const Point &p)
 	{
-		return v != p.getVector();
+		return v != p.get_vector();
 	}
 
 	// Getters
 
-	vector<point_type> getVector() const
+	vector<point_type> get_vector() const
 	{
 		return v;
+	}
+
+	// Others
+
+	string to_string()
+	{
+		string result = "";
+		char buff[10];
+
+		for(int i = 0; i < v.size(); ++i)
+		{
+			sprintf(buff, "%f", v[i]);
+			result += string(buff) + string("; ");
+		}
+		return result;
 	}
 };
