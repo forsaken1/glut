@@ -50,24 +50,24 @@ public:
 
 	// Operators
 
-	Point operator=(const Point &p)
+	const Point operator=(const Point &p)
 	{
 		v = new vector<point_type>(p.get_vector());
 
 		return *this;
 	}
 
-	bool operator==(const Point &p)
+	bool operator==(const Point &p) const
 	{
 		return *v == p.get_vector();
 	}
 
-	bool operator!=(const Point &p)
+	bool operator!=(const Point &p) const
 	{
 		return *v != p.get_vector();
 	}
 
-	point_type operator[](int index)
+	const point_type operator[](int index) const
 	{
 		if(0 <= index && index < (*v).size())
 			return (*v)[index];
@@ -77,14 +77,19 @@ public:
 
 	// Getters
 
-	vector<point_type> get_vector() const
+	const vector<point_type> get_vector() const
 	{
 		return *v;
 	}
 
 	// Others
 
-	string to_string()
+	const int dimension() const
+	{
+		return v->size();
+	}
+
+	const string to_string()
 	{
 		string result = "";
 		char buff[10];

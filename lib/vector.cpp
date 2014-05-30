@@ -1,4 +1,5 @@
 #include "point.cpp"
+#include <math.h>
 
 class Vector {
 
@@ -31,7 +32,7 @@ public:
 
 	// Operators
 
-	Vector operator=(const Vector &v)
+	const Vector operator=(const Vector &v)
 	{
 		start = new Point(v.get_start());
 		end = new Point(v.get_end());
@@ -51,20 +52,26 @@ public:
 
 	// Getters
 
-	Point get_start() const
+	const Point get_start() const
 	{
 		return *start;
 	}
 
-	Point get_end() const
+	const Point get_end() const
 	{
 		return *end;
 	}
 
 	// Others
 
-	point_type length() const
+	const point_type length() const
 	{
-		return 1;
+		point_type result = 0;
+
+		for(int i = 0; i < start->dimension(); ++i)
+		{
+			result += pow((*start)[i] - (*end)[i], 2);
+		}
+		return sqrt(result);
 	}
 };
