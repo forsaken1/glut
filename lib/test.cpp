@@ -29,6 +29,9 @@ int main()
 	cout << endl << "vector tests: ";
 	test_true(v0 == v1);
 	test_true(v0 != v2);
+	test_false(v0 == v2);
+	test_false(v0 != v1);
+	
 	cout << endl << "matrix tests: ";
 	cout << endl;
 

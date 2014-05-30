@@ -23,6 +23,12 @@ public:
 		end = new Point(v.get_end());
 	}
 
+	~Vector()
+	{
+		delete start;
+		delete end;
+	}
+
 	// Operators
 
 	Vector operator=(const Vector &v)

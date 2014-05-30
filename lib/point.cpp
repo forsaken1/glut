@@ -43,6 +43,11 @@ public:
 		v = new vector<point_type>(p.get_vector());
 	}
 
+	~Point()
+	{
+		delete v;
+	}
+
 	// Operators
 
 	Point operator=(const Point &p)
