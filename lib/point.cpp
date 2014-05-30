@@ -48,6 +48,8 @@ public:
 	Point operator=(const Point &p)
 	{
 		v = new vector<point_type>(p.get_vector());
+
+		return *this;
 	}
 
 	bool operator==(const Point &p)

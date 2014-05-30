@@ -2,44 +2,56 @@
 
 class Vector {
 
-	Point start, end;
+	Point *start = NULL, *end = NULL;
 
 public:
 	Vector()
 	{
-		start = Point(0, 0, 0);
-		end = Point(0, 0, 0);
+		start = new Point(0, 0, 0);
+		end = new Point(0, 0, 0);
 	}
 
 	Vector(const Point &_start, const Point &_end)
 	{
-		start = _start;
-		end = _end;
+		start = new Point(_start);
+		end = new Point(_end);
 	}
 
 	Vector(const Vector &v)
 	{
-		start = v.get_start();
-		end = v.get_end();
+		start = new Point(v.get_start());
+		end = new Point(v.get_end());
 	}
 
 	// Operators
 
-	bool operator=(const Vector &v)
+	Vector operator=(const Vector &v)
 	{
-		start = v.get_start();
-		end = v.get_end();
+		start = new Point(v.get_start());
+		end = new Point(v.get_end());
+
+		return *this;
+	}
+
+	bool operator==(const Vector &v)
+	{
+		return *start == v.get_start() && *end == v.get_end();
+	}
+
+	bool operator!=(const Vector &v)
+	{
+		return !(*this == v);
 	}
 
 	// Getters
 
 	Point get_start() const
 	{
-		return start;
+		return *start;
 	}
 
 	Point get_end() const
 	{
-		return end;
+		return *end;
 	}
 };

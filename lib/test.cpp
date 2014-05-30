@@ -15,7 +15,7 @@ void test_false(bool expr)
 
 int main()
 {
-	vector<float> v_0(3, 0);
+	vector<point_type> v_0(3, 0);
 	Point p0(v_0), p_0(0, 0, 0), p1(1, 0, 0);
 
 	cout << "point  tests: ";
@@ -24,11 +24,11 @@ int main()
 	test_true(p0 != p1);
 	test_false(p0 == p1);
 
-	//Vector v0();
-	//Vector v1(Point(0, 0, 0), Point(1, 0, 0));
+	Vector v0, v1(p0, p_0), v2(Point(0, 0, 0), Point(1, 0, 0));
 
 	cout << endl << "vector tests: ";
-	//test_true(v0 == v1);
+	test_true(v0 == v1);
+	test_true(v0 != v2);
 	cout << endl << "matrix tests: ";
 	cout << endl;
 
