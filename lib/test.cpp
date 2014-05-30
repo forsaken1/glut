@@ -24,10 +24,8 @@ int main()
 	test_true(p0 != p1);
 	test_false(p0 == p1);
 
-	cout << endl << p0.to_string();
-
 	Vector v0();
-	//Vector v1(Point(0, 0, 0), Point(1, 0, 0));
+	Vector v1(Point(0, 0, 0), Point(1, 0, 0));
 
 	cout << endl << "vector tests: ";
 	//test_true(v0 == v1);
