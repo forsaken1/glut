@@ -13,7 +13,12 @@ class Point {
 public:
 	Point()
 	{
-		v = new vector<point_type>();
+		v = new vector<point_type>(3, 0);
+	}
+
+	Point(int dimension)
+	{
+		v = new vector<point_type>(dimension, 0);
 	}
 
 	Point(vector<point_type> _v)
@@ -78,6 +83,17 @@ public:
 		return Point(mult);
 	}
 
+	const point_type operator*(const Point &p)
+	{
+		point_type result = 0;
+
+		for(int i = 0; i < (*v).size(); ++i)
+		{
+			result += (*v)[i] * p[i];
+		}
+		return result;
+	}
+
 	const Point operator+(const Point &p)
 	{
 		vector<point_type> l = *v, r = p.get_vector();
@@ -85,6 +101,17 @@ public:
 		for(int i = 0; i < v->size(); ++i)
 		{
 			l[i] += r[i];
+		}
+		return Point(l);
+	}
+
+	const Point operator-(const Point &p)
+	{
+		vector<point_type> l = *v, r = p.get_vector();
+
+		for(int i = 0; i < v->size(); ++i)
+		{
+			l[i] -= r[i];
 		}
 		return Point(l);
 	}

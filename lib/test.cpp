@@ -55,10 +55,16 @@ int main()
 	//multiply
 	test_true( (Point(1, 2, 3) * 5) == Point(5, 10, 15) );
 	test_false( (Point(1, 2, 3) * 5) == Point(5, 10, 14) );
+	test_true( Point(1, 2, -5) * Point(4, 8, 1) == 15 );
 	end_test_block();
 
 	//addition
 	test_true( Point(1, 2, 3) + Point(3, 2, 1) == Point(4, 4, 4));
+	end_test_block();
+
+	//substraction
+	test_true( Point(1, 3, 5) - Point(1, 3, 5) == p0 );
+	test_false( Point(0, 0, 0) - Point(1, 1, 1) == p0 );
 	end_test_block();
 
 
@@ -84,7 +90,7 @@ int main()
 	end_test_block();
 
 	//multiply
-	test_true( (v3 * 3) == Vector(p0, Point(3, 3, 3)) );
+	test_true( (v3 * 3) == Vector(p0, Point(3, 3, 3)) ); // todo: Vector(Point)
 	test_false( (v3 * 3) == Vector(p0, Point(3, 3, 1)) );
 	end_test_block();
 
@@ -94,6 +100,13 @@ int main()
 	test_true( v0 + v3 == v3 );
 	test_true( v0 + v3 == Vector(Point(0, 0, 0), Point(1, 1, 1)) );
 	test_true( v3 + v4 == Vector(Point(0, 0, 0), Point(5, 6, 4)) );
+	test_true( Vector(Point(1, 1, 1), Point(2, 2, 2)) + Vector(Point(3, 3, 3), Point(4, 4, 4)) 
+		== Vector(Point(4, 4, 4), Point(6, 6, 6)) );
+	end_test_block();
+
+	//substruction
+	test_true( v2 - Vector(p0, Point(1, 0, 0)) == v0 );
+	test_false( v1 - Vector(p0, Point(1, 0, 0)) == v0 );
 	end_test_block();
 
 

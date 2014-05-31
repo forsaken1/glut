@@ -55,9 +55,20 @@ public:
 		return Vector(*start * number, *end * number);
 	}
 
+	const point_type operator*(const Vector &v)
+	{
+		//return (*start) * v.get_start() - (*end) * v.get_end();
+		return Point( v.get_start().dimension() ) * Point( v.get_start().dimension() );
+	}
+
 	const Vector operator+(const Vector &v)
 	{
 		return Vector(*start + v.get_start(), *end + v.get_end());
+	}
+
+	const Vector operator-(const Vector &v)
+	{
+		return Vector(*start - v.get_start(), *end - v.get_end());
 	}
 
 	// Getters
@@ -80,7 +91,7 @@ public:
 
 		for(int i = 0; i < start->dimension(); ++i)
 		{
-			result += pow((*start)[i] - (*end)[i], 2);
+			result += pow( fabs((*start)[i] - (*end)[i]), 2);
 		}
 		return sqrt(result);
 	}
