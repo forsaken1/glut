@@ -20,7 +20,17 @@ public:
 		m = new matrix_type(dimension, vector<point_type>(dimension, value));
 	}
 
+	Matrix(const Matrix &_m)
+	{
+		m = new matrix_type(_m.get_matrix());
+	}
+
 	//Operators
+
+	const Matrix operator=(const Matrix &_m)
+	{
+		m = new matrix_type(_m.get_matrix());
+	}
 
 	const vector<point_type> operator[](int index) const
 	{
@@ -59,7 +69,7 @@ public:
 
 	bool operator==(const Matrix &_m) const
 	{
-		return false;
+		return *m == _m.get_matrix();
 	}
 
 	bool operator!=(const Matrix &_m) const
@@ -74,6 +84,11 @@ public:
 		return (*m)[i][j];
 	}
 
+	const matrix_type get_matrix() const
+	{
+		return *m;
+	}
+
 	//Other
 
 	int dimension() const
@@ -81,12 +96,12 @@ public:
 		return (*m).size();
 	}
 
-	const point_type det() const
+	const point_type det() const //todo
 	{
 		return 0;
 	}
 
-	const Matrix inv() const
+	const Matrix inv() const //todo
 	{
 		return Matrix();
 	}

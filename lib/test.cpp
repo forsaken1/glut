@@ -29,7 +29,7 @@ void test_not_equal(point_type l, point_type r)
 
 void end_test_block()
 {
-	cout << "";
+	cout << " ";
 }
 
 int main()
@@ -142,8 +142,8 @@ int main()
 	test_equal(m2.get(1, 1), 1);
 	end_test_block();
 
-	//determinant
-	test_equal(~m0, 0);
+	//equal
+	test_true( (m0 = m1).dimension() == 4 );
 	end_test_block();
 
 	//addition
@@ -159,8 +159,12 @@ int main()
 	test_true(m2 * m0 == m2);
 	end_test_block();
 
+	//determinant
+	test_equal(~m0, 10);
+	end_test_block();
+
 	//invariant
-	test_true(!m0 == m0);
+	test_true(!m2 == m2);
 	end_test_block();
 
 	cout << endl;
