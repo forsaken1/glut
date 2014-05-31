@@ -4,6 +4,30 @@ class Matrix {
 
 	matrix_type *m = NULL;
 
+	const Matrix operation(const Matrix &_m, char oper) const
+	{
+		int dim = dimension();
+
+		if(dim != _m.dimension())
+			return Matrix(dim);
+
+		matrix_type result = *m, r = _m.get_matrix();
+
+		for(int i = 0; i < result.size(); ++i)
+		{
+			for(int j = 0; j < result[i].size(); ++j)
+			{
+				switch(oper)
+				{
+					case '+': result[i][j] += r[i][j]; break;
+					case '-': result[i][j] -= r[i][j]; break;
+					case '*': result[i][j] *= r[i][j]; break;
+				}
+			}
+		}
+		return Matrix(result);
+	}
+
 public:
 	Matrix()
 	{
@@ -18,6 +42,11 @@ public:
 	Matrix(int dimension, const point_type value)
 	{
 		m = new matrix_type(dimension, vector<point_type>(dimension, value));
+	}
+
+	Matrix(const matrix_type _m)
+	{
+		m = new matrix_type(_m);
 	}
 
 	Matrix(const Matrix &_m)
@@ -39,17 +68,17 @@ public:
 
 	const Matrix operator+(const Matrix &_m) const
 	{
-		return Matrix();
+		return operation(_m, '+');
 	}
 
 	const Matrix operator-(const Matrix &_m) const
 	{
-		return Matrix();
+		return operation(_m, '-');
 	}
 
-	const Matrix operator*(const point_type) const
+	const Matrix operator*(const point_type number) const
 	{
-		return Matrix();
+		return operation(Matrix(dimension(), number), '*');
 	}
 
 	const Matrix operator*(const Matrix &_m) const

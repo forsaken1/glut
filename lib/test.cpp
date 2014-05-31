@@ -129,6 +129,7 @@ int main()
 
 	/* ------ */
 	Matrix m0, m1(4), m2(4, 1);
+	Matrix m3(4, 5), m4(4, 125), m5(4, 15);
 
 	//Matrix tests
 	cout << endl << "matrix tests: ";
@@ -143,19 +144,23 @@ int main()
 	end_test_block();
 
 	//equal
-	test_true( (m0 = m1).dimension() == 4 );
+	m0 = m1;
+	test_true(m0.dimension() == 4);
 	end_test_block();
 
 	//addition
 	test_true(m2 + m0 == m2);
+	test_true(m3 + m3 + m3 == m5);
 	end_test_block();
 
 	//subscription
 	test_true(m0 - m0 == m0);
+	test_true(m5 - m3 - m3 == m3);
 	end_test_block();
 
 	//multiply
 	test_true(m0 * 100 == m0);
+	test_true(m3 * 25 == m4);
 	test_true(m2 * m0 == m2);
 	end_test_block();
 
