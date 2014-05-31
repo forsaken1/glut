@@ -12,6 +12,12 @@ public:
 		end = new Point(0, 0, 0);
 	}
 
+	Vector(const Point &_end)
+	{
+		start = new Point(0, 0, 0);
+		end = new Point(_end);
+	}
+
 	Vector(const Point &_start, const Point &_end)
 	{
 		start = new Point(_start);
