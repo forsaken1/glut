@@ -135,6 +135,8 @@ int main()
 	test_equal(m0[2][2], 0);
 	test_equal(m1[3][3], 0);
 	test_equal(m2[3][3], 1);
+	test_true(m0.dimension() == 3);
+	test_true(m1.dimension() == 4);
 	cout << endl;
 
 	return 0;

@@ -27,4 +27,11 @@ public:
 		return (*m)[index];
 	}
 
+	//Other
+	
+	int dimension() const
+	{
+		return (*m).size();
+	}
+
 };
