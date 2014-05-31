@@ -1,6 +1,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include "vector.cpp"
+#include "matrix.cpp"
 
 #define EPS 0.000001
 
@@ -114,7 +115,7 @@ int main()
 	test_false( v1 - Vector(Point(1, 0, 0)) == v0 );
 	end_test_block();
 
-	//vector multiply
+	//scalar multiply
 	test_true( v5 * v6 == 6 );
 	end_test_block();
 
@@ -123,9 +124,17 @@ int main()
 	test_equal(v6.normalize().length(), 1);
 	end_test_block();
 
+	//vector multiply :todo
+
+
+	/* ------ */
+	Matrix m0, m1(4), m2(4, 1);
 
 	//Matrix tests
 	cout << endl << "matrix tests: ";
+	test_equal(m0[2][2], 0);
+	test_equal(m1[3][3], 0);
+	test_equal(m2[3][3], 1);
 	cout << endl;
 
 	return 0;
