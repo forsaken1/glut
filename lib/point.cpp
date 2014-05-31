@@ -72,7 +72,7 @@ public:
 		return *v != p.get_vector();
 	}
 
-	const Point operator*(point_type number)
+	const Point operator*(point_type number) const
 	{
 		vector<point_type> mult = *v;
 
@@ -83,7 +83,7 @@ public:
 		return Point(mult);
 	}
 
-	const point_type operator*(const Point &p)
+	const point_type operator*(const Point &p) const
 	{
 		point_type result = 0;
 
@@ -94,7 +94,7 @@ public:
 		return result;
 	}
 
-	const Point operator+(const Point &p)
+	const Point operator+(const Point &p) const
 	{
 		vector<point_type> l = *v, r = p.get_vector();
 
@@ -105,7 +105,7 @@ public:
 		return Point(l);
 	}
 
-	const Point operator-(const Point &p)
+	const Point operator-(const Point &p) const
 	{
 		vector<point_type> l = *v, r = p.get_vector();
 

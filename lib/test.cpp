@@ -71,6 +71,7 @@ int main()
 	/* ------ */
 	Vector v0, v1(p0, p_0), v2(Point(1, 0, 0));
 	Vector v3(p0, Point(1, 1, 1)), v4(p0, Point(4, 5, 3));
+	Vector v5(Point(1, -1, 3), Point(0, 1, -2)), v6(Point(1, -1, 3), Point(4, -4, 0));
 
 	// Vector tests
 	cout << endl << "vector tests: ";
@@ -107,6 +108,10 @@ int main()
 	//substruction
 	test_true( v2 - Vector(Point(1, 0, 0)) == v0 );
 	test_false( v1 - Vector(Point(1, 0, 0)) == v0 );
+	end_test_block();
+
+	//vector multiply
+	test_true( v5 * v6 == 6 );
 	end_test_block();
 
 

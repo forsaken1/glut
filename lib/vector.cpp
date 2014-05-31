@@ -56,23 +56,22 @@ public:
 		return !(*this == v);
 	}
 
-	const Vector operator*(point_type number)
+	const Vector operator*(point_type number) const
 	{
 		return Vector(*start * number, *end * number);
 	}
 
-	const point_type operator*(const Vector &v)
+	const point_type operator*(const Vector &v) const
 	{
-		//return (*start) * v.get_start() - (*end) * v.get_end();
-		return Point( v.get_start().dimension() ) * Point( v.get_start().dimension() );
+		return (*end - *start) * (v.get_end() - v.get_start());
 	}
 
-	const Vector operator+(const Vector &v)
+	const Vector operator+(const Vector &v) const
 	{
 		return Vector(*start + v.get_start(), *end + v.get_end());
 	}
 
-	const Vector operator-(const Vector &v)
+	const Vector operator-(const Vector &v) const
 	{
 		return Vector(*start - v.get_start(), *end - v.get_end());
 	}
