@@ -140,6 +140,28 @@ int main()
 	test_true(m0.dimension() == 3);
 	test_true(m1.dimension() == 4);
 	test_equal(m2.get(1, 1), 1);
+	end_test_block();
+
+	//determinant
+	test_equal(~m0, 0);
+	end_test_block();
+
+	//addition
+	test_true(m2 + m0 == m2);
+	end_test_block();
+
+	//subscription
+	test_true(m0 - m0 == m0);
+	end_test_block();
+
+	//multiply
+	test_true(m0 * 100 == m0);
+	test_true(m2 * m0 == m2);
+	end_test_block();
+
+	//invariant
+	test_true(!m0 == m0);
+	end_test_block();
 
 	cout << endl;
 
