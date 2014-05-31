@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "vector.cpp"
 
-#define EPS 0.0000001
+#define EPS 0.000001
 
 using namespace std;
 
@@ -53,9 +53,13 @@ int main()
 	end_test_block();
 
 	//multiply
-	test_true( (Point(1, 2, 3) * 5) == Point(5, 10, 15) );
-	test_false( (Point(1, 2, 3) * 5) == Point(5, 10, 14) );
+	test_true( Point(1, 2, 3) * 5 == Point(5, 10, 15) );
+	test_false( Point(1, 2, 3) * 5 == Point(5, 10, 14) );
 	test_true( Point(1, 2, -5) * Point(4, 8, 1) == 15 );
+	end_test_block();
+	
+	//divide
+	test_true( Point(9, 15, 45) / Point(3, 3, 3) == Point(3, 5, 15) );
 	end_test_block();
 
 	//addition
@@ -112,6 +116,11 @@ int main()
 
 	//vector multiply
 	test_true( v5 * v6 == 6 );
+	end_test_block();
+
+	//normalize
+	test_equal(v5.normalize().length(), 1);
+	test_equal(v6.normalize().length(), 1);
 	end_test_block();
 
 

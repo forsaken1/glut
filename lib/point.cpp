@@ -10,6 +10,22 @@ class Point {
 
 	vector<point_type> *v = NULL;
 
+	const Point operation(vector<point_type> r, char oper) const
+	{
+		vector<point_type> l = *v;
+
+		for(int i = 0; i < v->size(); ++i)
+		{
+			switch(oper)
+			{
+				case '+': l[i] += r[i]; break;
+				case '-': l[i] -= r[i]; break;
+				case '/': l[i] /= r[i]; break;
+			}
+		}
+		return Point(l);
+	}
+
 public:
 	Point()
 	{
@@ -19,6 +35,11 @@ public:
 	Point(int dimension)
 	{
 		v = new vector<point_type>(dimension, 0);
+	}
+
+	Point(int dimension, const point_type value)
+	{
+		v = new vector<point_type>(dimension, value);
 	}
 
 	Point(vector<point_type> _v)
@@ -87,38 +108,31 @@ public:
 	{
 		point_type result = 0;
 
-		for(int i = 0; i < (*v).size(); ++i)
+		for(int i = 0; i < v->size(); ++i)
 		{
 			result += (*v)[i] * p[i];
 		}
 		return result;
 	}
 
+	const Point operator/(const Point &p) const
+	{
+		return operation(p.get_vector(), '/');
+	}
+
 	const Point operator+(const Point &p) const
 	{
-		vector<point_type> l = *v, r = p.get_vector();
-
-		for(int i = 0; i < v->size(); ++i)
-		{
-			l[i] += r[i];
-		}
-		return Point(l);
+		return operation(p.get_vector(), '+');
 	}
 
 	const Point operator-(const Point &p) const
 	{
-		vector<point_type> l = *v, r = p.get_vector();
-
-		for(int i = 0; i < v->size(); ++i)
-		{
-			l[i] -= r[i];
-		}
-		return Point(l);
+		return operation(p.get_vector(), '-');
 	}
 
 	const point_type operator[](int index) const
 	{
-		if(0 <= index && index < (*v).size())
+		if(0 <= index && index < v->size())
 			return (*v)[index];
 		
 		return 0;
@@ -138,7 +152,7 @@ public:
 		return v->size();
 	}
 
-	const string to_string()
+	const string to_string() const
 	{
 		string result = "";
 		char buff[10];

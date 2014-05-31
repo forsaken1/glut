@@ -90,6 +90,14 @@ public:
 
 	// Others
 
+	int dimension() const
+	{
+		if(start->dimension() == end->dimension())
+			return start->dimension();
+
+		return 0;
+	}
+
 	const point_type length() const
 	{
 		point_type result = 0;
@@ -98,6 +106,16 @@ public:
 		{
 			result += pow( fabs((*start)[i] - (*end)[i]), 2);
 		}
-		return sqrt(result);
+		return (point_type)sqrt(result);
+	}
+
+	const Vector normalize() const
+	{
+		const point_type len = length();
+
+		if(len != 0)
+			return Vector( (*end - *start) / Point(dimension(), len) );
+
+		return Vector();
 	}
 };
