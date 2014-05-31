@@ -27,8 +27,15 @@ public:
 		return (*m)[index];
 	}
 
+	//Getters
+
+	const point_type get(int i, int j)
+	{
+		return (*m)[i][j];
+	}
+
 	//Other
-	
+
 	int dimension() const
 	{
 		return (*m).size();
