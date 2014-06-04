@@ -71,6 +71,8 @@ public:
 	const Matrix operator=(const Matrix &_m)
 	{
 		m = new matrix_type(_m.get_matrix());
+
+		return *this;
 	}
 
 	const vector<point_type> operator[](int index) const

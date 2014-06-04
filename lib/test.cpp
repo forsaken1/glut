@@ -27,6 +27,24 @@ void test_not_equal(point_type l, point_type r)
 	cout << (fabs(l - r) > EPS ? "+" : "-");
 }
 
+void test_equal_matrix(const Matrix &_l, const Matrix &_r)
+{
+	matrix_type l = _l.get_matrix(), r = _r.get_matrix();
+
+	for(int i = 0; i < l.size(); ++i)
+	{
+		for(int j = 0; j < l[i].size(); ++j)
+		{
+			if(fabs(l[i][j] - r[i][j]) > EPS)
+			{
+				cout << "-";
+				return;
+			}
+		}
+	}
+	cout << "+";
+}
+
 void end_test_block()
 {
 	cout << " ";
@@ -130,7 +148,7 @@ int main()
 
 
 	/* ------ */
-	Matrix m0, m1(4), m2(4, 1);
+	Matrix m, m0, m1(4), m2(4, 1);
 	Matrix m3(4, 5), m4(4, 125), m5(4, 15);
 	Matrix m6 {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
 	Matrix m7 {{1, 2, 1}, {4, 5, 3}, {3, 8, 2}};
@@ -186,10 +204,10 @@ int main()
 	//invariant
 	test_true(!m2 == m2);
 	test_true(m6 == !!m6);
-	test_true(m7 == !!m7);
 	test_true(!m6 == m6);
-	test_true(m7 * !m7 == Matrix(4, 1));
-	test_true(!m7 == Matrix{{-2.8, 0.8, 0.2}, {0.2, -0.2, 0.2}, {3.4, -0.4, -0.6}});
+	test_equal_matrix(m7, !!m7);
+	test_equal_matrix(m7 * !m7, Matrix{{1, 0, 0}, {0, 1, 0}, {0, 0, 1}});
+	test_equal_matrix(!m7, Matrix{{-2.8, 0.8, 0.2}, {0.2, -0.2, 0.2}, {3.4, -0.4, -0.6}});
 	test_true(!Matrix{{1, 2}, {3, 4}} == Matrix{{-2, 1}, {1.5, -0.5}});
 	end_test_block();
 
