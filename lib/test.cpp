@@ -120,6 +120,8 @@ int main()
 	end_test_block();
 
 	//normalize
+	test_not_equal(v5.length(), 1);
+	test_not_equal(v6.length(), 1);
 	test_equal(v5.normalize().length(), 1);
 	test_equal(v6.normalize().length(), 1);
 	end_test_block();
