@@ -165,7 +165,8 @@ int main()
 	end_test_block();
 
 	//determinant
-	test_equal(~m0, 10);
+	test_equal(~m0, 0);
+	test_equal(~m2, 0);
 	end_test_block();
 
 	//invariant

@@ -81,7 +81,7 @@ public:
 		return operation(Matrix(dimension(), number), '*');
 	}
 
-	const Matrix operator*(const Matrix &_m) const
+	const Matrix operator*(const Matrix &_m) const //todo
 	{
 		return Matrix();
 	}
@@ -122,12 +122,29 @@ public:
 
 	int dimension() const
 	{
-		return (*m).size();
+		return m->size();
 	}
 
-	const point_type det() const //todo
+	const point_type det() const
 	{
-		return 0;
+		point_type det = 1;
+		matrix_type mass = *m;
+
+		for(int i = 0; i < mass.size(); ++i)
+		{
+			for(int j = i + 1; j < mass[i].size(); ++j)
+			{
+				if(mass[i][i] == 0)
+					return 0;
+
+				point_type b = mass[j][i] / mass[i][i];
+
+				for(int k = i; k < mass[i].size(); ++k)
+					mass[j][k] = mass[j][k] - mass[i][k] * b;
+			}
+			det *= mass[i][i];
+		}
+		return det;
 	}
 
 	const Matrix inv() const //todo
