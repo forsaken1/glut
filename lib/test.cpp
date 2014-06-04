@@ -171,7 +171,7 @@ int main()
 	//multiply
 	test_true(m0 * 100 == m0);
 	test_true(m3 * 25 == m4);
-	test_true(m2 * m0 == m2);
+	test_true(m2 * m0 == m0);
 	test_true(m6 * m7 == Matrix{{18, 36, 13}, {42, 81, 31}, {66, 126, 49}});
 	test_true(m7 * m6 == Matrix{{16, 20, 24}, {45, 57, 69}, {49, 62, 75}});
 	end_test_block();

@@ -93,9 +93,21 @@ public:
 		return operation(Matrix(dimension(), number), '*');
 	}
 
-	const Matrix operator*(const Matrix &_m) const //todo
+	const Matrix operator*(const Matrix &_m) const
 	{
-		return Matrix();
+		matrix_type l = *m, r = _m.get_matrix();
+		
+		for(int i = 0; i < m->size(); i++)
+		{
+			for(int j = 0; j < (*m)[i].size(); j++)
+			{
+				l[i][j] = 0;
+
+				for(int k = 0; k < m->size(); k++)
+					l[i][j] += (*m)[i][k] * r[k][j];
+			}
+		}
+		return Matrix(l);
 	}
 
 	const Matrix operator!() const
