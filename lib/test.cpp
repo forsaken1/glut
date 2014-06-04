@@ -172,7 +172,8 @@ int main()
 	test_true(m0 * 100 == m0);
 	test_true(m3 * 25 == m4);
 	test_true(m2 * m0 == m2);
-	// todo
+	test_true(m6 * m7 == Matrix{{18, 36, 13}, {42, 81, 31}, {66, 126, 49}});
+	test_true(m7 * m6 == Matrix{{16, 20, 24}, {45, 57, 69}, {49, 62, 75}});
 	end_test_block();
 
 	//determinant
@@ -184,7 +185,12 @@ int main()
 
 	//invariant
 	test_true(!m2 == m2);
-	// todo
+	test_true(m6 == !!m6);
+	test_true(m7 == !!m7);
+	test_true(!m6 == m6);
+	test_true(m7 * !m7 == Matrix(4, 1));
+	test_true(!m7 == Matrix{{-2.8, 0.8, 0.2}, {0.2, -0.2, 0.2}, {3.4, -0.4, -0.6}});
+	test_true(!Matrix{{1, 2}, {3, 4}} == Matrix{{-2, 1}, {1.5, -0.5}});
 	end_test_block();
 
 	cout << endl;
