@@ -132,6 +132,7 @@ int main()
 	/* ------ */
 	Matrix m0, m1(4), m2(4, 1);
 	Matrix m3(4, 5), m4(4, 125), m5(4, 15);
+	Matrix m6 {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
 
 	//Matrix tests
 	cout << endl << "matrix tests: ";
@@ -140,8 +141,12 @@ int main()
 	test_equal(m0[2][2], 0);
 	test_equal(m1[3][3], 0);
 	test_equal(m2[3][3], 1);
+	test_equal(m6[0][2], 3);
+	test_equal(m6[1][1], 5);
+	test_equal(m6[2][0], 7);
 	test_true(m0.dimension() == 3);
 	test_true(m1.dimension() == 4);
+	test_true(m6.dimension() == 3);
 	test_equal(m2.get(1, 1), 1);
 	end_test_block();
 

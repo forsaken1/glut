@@ -54,6 +54,18 @@ public:
 		m = new matrix_type(_m.get_matrix());
 	}
 
+	Matrix(initializer_list< initializer_list<point_type> > list)
+	{
+		vector< initializer_list<point_type> > setVec = list;
+		vector< vector<point_type> > v;
+
+		for(vector< initializer_list<point_type> >::iterator i = setVec.begin(); i != setVec.end(); ++i)
+		{
+			v.push_back(vector<point_type>(*i));
+		}
+		m = new matrix_type(v);
+	}
+
 	//Operators
 
 	const Matrix operator=(const Matrix &_m)
