@@ -133,6 +133,7 @@ int main()
 	Matrix m0, m1(4), m2(4, 1);
 	Matrix m3(4, 5), m4(4, 125), m5(4, 15);
 	Matrix m6 {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+	Matrix m7 {{1, 2, 1}, {4, 5, 3}, {3, 8, 2}};
 
 	//Matrix tests
 	cout << endl << "matrix tests: ";
@@ -177,7 +178,8 @@ int main()
 	//determinant
 	test_equal(~m0, 0);
 	test_equal(~m2, 0);
-	// todo
+	test_equal(~m6, 0);
+	test_equal(~m7, 5);
 	end_test_block();
 
 	//invariant
