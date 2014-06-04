@@ -130,7 +130,7 @@ public:
 		return operation(p.get_vector(), '-');
 	}
 
-	const point_type operator[](int index) const
+	point_type& operator[](int index) const
 	{
 		return (*v)[index % v->size()];
 	}

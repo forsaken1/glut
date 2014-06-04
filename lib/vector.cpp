@@ -66,6 +66,17 @@ public:
 		return (*end - *start) * (v.get_end() - v.get_start());
 	}
 
+	const Vector operator^(const Vector &v) const
+	{
+		Point p1(*end - *start), p2(v.get_end() - v.get_start()), p(dimension());
+
+		for(int i = 0; i < dimension(); ++i)
+		{
+			p[i] = p1[i + 1] * p2[i + 2] - p1[i + 2] * p2[i + 1];
+		}
+		return Vector(p);
+	}
+
 	const Vector operator+(const Vector &v) const
 	{
 		return Vector(*start + v.get_start(), *end + v.get_end());

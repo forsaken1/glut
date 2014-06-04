@@ -144,7 +144,9 @@ int main()
 	test_equal(v6.normalize().length(), 1);
 	end_test_block();
 
-	//vector multiply :todo
+	//vector multiply
+	test_true( (v5 ^ v6) == Vector(Point(-21, -18, -3)) );
+	end_test_block();
 
 
 	/* ------ */
