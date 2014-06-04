@@ -144,8 +144,10 @@ int main()
 	end_test_block();
 
 	//equal
+	test_false(m0 == m1);
 	m0 = m1;
 	test_true(m0.dimension() == 4);
+	test_true(m0 == m1);
 	end_test_block();
 
 	//addition
@@ -162,15 +164,18 @@ int main()
 	test_true(m0 * 100 == m0);
 	test_true(m3 * 25 == m4);
 	test_true(m2 * m0 == m2);
+	// todo
 	end_test_block();
 
 	//determinant
 	test_equal(~m0, 0);
 	test_equal(~m2, 0);
+	// todo
 	end_test_block();
 
 	//invariant
 	test_true(!m2 == m2);
+	// todo
 	end_test_block();
 
 	cout << endl;
