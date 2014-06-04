@@ -159,9 +159,68 @@ public:
 		return det;
 	}
 
-	const Matrix inv() const //todo
+	const Matrix inv() const
 	{
-		return Matrix();
+		int i, j, k, cnt_str = m->size();
+		matrix_type mass = *m, M_obr(cnt_str, vector<point_type>(cnt_str, 0));
+
+		for(i = 0; i < cnt_str; ++i)
+			M_obr[i][i] = 1;
+
+		point_type a, b;
+
+		for(i = 0; i < cnt_str; ++i)
+		{
+			a = mass[i][i];
+
+			for(j = i + 1; j < cnt_str; j++)
+			{
+				b = mass[j][i];
+
+				for(k = 0; k < cnt_str; ++k)
+				{
+					mass[j][k] = mass[i][k] * b - mass[j][k] * a;
+					M_obr[j][k] = M_obr[i][k] * b - M_obr[j][k] * a;
+				}
+			}
+		}
+
+		point_type sum;
+
+		for(i = 0; i < cnt_str; ++i)
+		{
+			for(j = cnt_str - 1; j >= 0; --j)
+			{
+				sum = 0;
+
+				for(k = cnt_str - 1; k > j; --k)
+					sum += mass[j][k] * M_obr[k][i];
+
+				if(mass[j][j] == 0)
+					return *this;
+
+				M_obr[j][i] = (M_obr[j][i] - sum) / mass[j][j];
+			}
+		}
+		return Matrix(M_obr);
+	}
+
+	const string to_string() const
+	{
+		string result = "";
+		char buff[10];
+
+		for(int i = 0; i < m->size(); ++i)
+		{
+			result += "{ ";
+			for(int j = 0; j < (*m)[i].size(); ++j)
+			{
+				sprintf(buff, "%f", (*m)[i][j]);
+				result += string(buff) + (j + 1 == (*m)[i].size() ? string("") : string(", "));
+			}
+			result += " }, ";
+		}
+		return result;
 	}
 
 };
