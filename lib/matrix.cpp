@@ -54,11 +54,25 @@ public:
 		m = new matrix_type(_m.get_matrix());
 	}
 
+	Matrix(initializer_list< initializer_list<point_type> > list)
+	{
+		vector< initializer_list<point_type> > setVec = list;
+		vector< vector<point_type> > v;
+
+		for(vector< initializer_list<point_type> >::iterator i = setVec.begin(); i != setVec.end(); ++i)
+		{
+			v.push_back(vector<point_type>(*i));
+		}
+		m = new matrix_type(v);
+	}
+
 	//Operators
 
 	const Matrix operator=(const Matrix &_m)
 	{
 		m = new matrix_type(_m.get_matrix());
+
+		return *this;
 	}
 
 	const vector<point_type> operator[](int index) const
@@ -83,7 +97,19 @@ public:
 
 	const Matrix operator*(const Matrix &_m) const
 	{
-		return Matrix();
+		matrix_type l = *m, r = _m.get_matrix();
+		
+		for(int i = 0; i < m->size(); i++)
+		{
+			for(int j = 0; j < (*m)[i].size(); j++)
+			{
+				l[i][j] = 0;
+
+				for(int k = 0; k < m->size(); k++)
+					l[i][j] += (*m)[i][k] * r[k][j];
+			}
+		}
+		return Matrix(l);
 	}
 
 	const Matrix operator!() const
@@ -122,17 +148,93 @@ public:
 
 	int dimension() const
 	{
-		return (*m).size();
+		return m->size();
 	}
 
-	const point_type det() const //todo
+	const point_type det() const
 	{
-		return 0;
+		point_type det = 1;
+		matrix_type mass = *m;
+
+		for(int i = 0; i < mass.size(); ++i)
+		{
+			for(int j = i + 1; j < mass[i].size(); ++j)
+			{
+				if(mass[i][i] == 0)
+					return 0;
+
+				point_type b = mass[j][i] / mass[i][i];
+
+				for(int k = i; k < mass[i].size(); ++k)
+					mass[j][k] = mass[j][k] - mass[i][k] * b;
+			}
+			det *= mass[i][i];
+		}
+		return det;
 	}
 
-	const Matrix inv() const //todo
+	const Matrix inv() const
 	{
-		return Matrix();
+		int i, j, k, cnt_str = m->size();
+		matrix_type mass = *m, M_obr(cnt_str, vector<point_type>(cnt_str, 0));
+
+		for(i = 0; i < cnt_str; ++i)
+			M_obr[i][i] = 1;
+
+		point_type a, b;
+
+		for(i = 0; i < cnt_str; ++i)
+		{
+			a = mass[i][i];
+
+			for(j = i + 1; j < cnt_str; j++)
+			{
+				b = mass[j][i];
+
+				for(k = 0; k < cnt_str; ++k)
+				{
+					mass[j][k] = mass[i][k] * b - mass[j][k] * a;
+					M_obr[j][k] = M_obr[i][k] * b - M_obr[j][k] * a;
+				}
+			}
+		}
+
+		point_type sum;
+
+		for(i = 0; i < cnt_str; ++i)
+		{
+			for(j = cnt_str - 1; j >= 0; --j)
+			{
+				sum = 0;
+
+				for(k = cnt_str - 1; k > j; --k)
+					sum += mass[j][k] * M_obr[k][i];
+
+				if(mass[j][j] == 0)
+					return *this;
+
+				M_obr[j][i] = (M_obr[j][i] - sum) / mass[j][j];
+			}
+		}
+		return Matrix(M_obr);
+	}
+
+	const string to_string() const
+	{
+		string result = "";
+		char buff[10];
+
+		for(int i = 0; i < m->size(); ++i)
+		{
+			result += "{ ";
+			for(int j = 0; j < (*m)[i].size(); ++j)
+			{
+				sprintf(buff, "%f", (*m)[i][j]);
+				result += string(buff) + (j + 1 == (*m)[i].size() ? string("") : string(", "));
+			}
+			result += " }, ";
+		}
+		return result;
 	}
 
 };

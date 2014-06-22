@@ -27,6 +27,24 @@ void test_not_equal(point_type l, point_type r)
 	cout << (fabs(l - r) > EPS ? "+" : "-");
 }
 
+void test_equal_matrix(const Matrix &_l, const Matrix &_r)
+{
+	matrix_type l = _l.get_matrix(), r = _r.get_matrix();
+
+	for(int i = 0; i < l.size(); ++i)
+	{
+		for(int j = 0; j < l[i].size(); ++j)
+		{
+			if(fabs(l[i][j] - r[i][j]) > EPS)
+			{
+				cout << "-";
+				return;
+			}
+		}
+	}
+	cout << "+";
+}
+
 void end_test_block()
 {
 	cout << " ";
@@ -120,16 +138,22 @@ int main()
 	end_test_block();
 
 	//normalize
+	test_not_equal(v5.length(), 1);
+	test_not_equal(v6.length(), 1);
 	test_equal(v5.normalize().length(), 1);
 	test_equal(v6.normalize().length(), 1);
 	end_test_block();
 
-	//vector multiply :todo
+	//vector multiply
+	test_true( (v5 ^ v6) == Vector(Point(-21, -18, -3)) );
+	end_test_block();
 
 
 	/* ------ */
-	Matrix m0, m1(4), m2(4, 1);
+	Matrix m, m0, m1(4), m2(4, 1);
 	Matrix m3(4, 5), m4(4, 125), m5(4, 15);
+	Matrix m6 {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+	Matrix m7 {{1, 2, 1}, {4, 5, 3}, {3, 8, 2}};
 
 	//Matrix tests
 	cout << endl << "matrix tests: ";
@@ -138,14 +162,20 @@ int main()
 	test_equal(m0[2][2], 0);
 	test_equal(m1[3][3], 0);
 	test_equal(m2[3][3], 1);
+	test_equal(m6[0][2], 3);
+	test_equal(m6[1][1], 5);
+	test_equal(m6[2][0], 7);
 	test_true(m0.dimension() == 3);
 	test_true(m1.dimension() == 4);
+	test_true(m6.dimension() == 3);
 	test_equal(m2.get(1, 1), 1);
 	end_test_block();
 
 	//equal
+	test_false(m0 == m1);
 	m0 = m1;
 	test_true(m0.dimension() == 4);
+	test_true(m0 == m1);
 	end_test_block();
 
 	//addition
@@ -161,15 +191,26 @@ int main()
 	//multiply
 	test_true(m0 * 100 == m0);
 	test_true(m3 * 25 == m4);
-	test_true(m2 * m0 == m2);
+	test_true(m2 * m0 == m0);
+	test_true(m6 * m7 == Matrix{{18, 36, 13}, {42, 81, 31}, {66, 126, 49}});
+	test_true(m7 * m6 == Matrix{{16, 20, 24}, {45, 57, 69}, {49, 62, 75}});
 	end_test_block();
 
 	//determinant
-	test_equal(~m0, 10);
+	test_equal(~m0, 0);
+	test_equal(~m2, 0);
+	test_equal(~m6, 0);
+	test_equal(~m7, 5);
 	end_test_block();
 
 	//invariant
 	test_true(!m2 == m2);
+	test_true(m6 == !!m6);
+	test_true(!m6 == m6);
+	test_equal_matrix(m7, !!m7);
+	test_equal_matrix(m7 * !m7, Matrix{{1, 0, 0}, {0, 1, 0}, {0, 0, 1}});
+	test_equal_matrix(!m7, Matrix{{-2.8, 0.8, 0.2}, {0.2, -0.2, 0.2}, {3.4, -0.4, -0.6}});
+	test_true(!Matrix{{1, 2}, {3, 4}} == Matrix{{-2, 1}, {1.5, -0.5}});
 	end_test_block();
 
 	cout << endl;

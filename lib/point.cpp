@@ -130,12 +130,9 @@ public:
 		return operation(p.get_vector(), '-');
 	}
 
-	const point_type operator[](int index) const
+	point_type& operator[](int index) const
 	{
-		if(0 <= index && index < v->size())
-			return (*v)[index];
-		
-		return 0;
+		return (*v)[index % v->size()];
 	}
 
 	// Getters
