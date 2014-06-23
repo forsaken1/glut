@@ -1,3 +1,3 @@
 #!/bin/bash
-g++ hw1.cpp -lglut -lGL -lGLU -lGLEW
+g++ main.cpp -lglut -lGL -lGLU -lGLEW
 ./a.out
