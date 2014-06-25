@@ -13,3 +13,11 @@ gcc source.cpp -lglut -lGL -lGLU -lGLEW
 ```
 g++ test.cpp -std=c++11
 ```
+
+## Assimp
+
+```
+git clone git://github.com/assimp/assimp.git assimp
+
+sudo apt-get install libassimp-dev
+```
